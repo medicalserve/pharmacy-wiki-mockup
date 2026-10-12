@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
 <title>薬局Wikiアプリ モックアップ</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&display=swap">
 <style>
 /* レイアウト：青い舞台の中央にスマホを置き、左に役割の切り替え、右に「この操作で届く通知」を並べる。狭い幅では縦に積む。 */
 :root {
@@ -17,7 +16,7 @@
 	--warn-soft: #fff3cf; --warn-ink: #6b5200;
 	--ok: #1c7a43; --ok-soft: #e4f5ea;
 	--bezel: #0d1524;
-	--font: "Zen Maru Gothic", "Hiragino Maru Gothic ProN", "Hiragino Sans", "Yu Gothic UI", Meiryo, sans-serif;
+	--font: "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, "Noto Sans JP", "Noto Sans CJK JP", sans-serif;
 	--r-tile: 14px; --r-card: 12px; --r-pill: 999px;
 }
 @media (prefers-color-scheme: dark) {
@@ -45,7 +44,7 @@
 	color-scheme: dark;
 }
 *, *::before, *::after { box-sizing: border-box; }
-body { background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 16px; line-height: 1.7; font-weight: 500; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 16px; line-height: 1.7; font-weight: 400; }
 button, input, textarea, select { font: inherit; color: inherit; }
 button { cursor: pointer; }
 :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
@@ -56,7 +55,7 @@ h1, h2, h3 { line-height: 1.35; text-wrap: balance; }
 .intro { display: grid; gap: 8px; max-width: 46em; }
 .intro h1 { font-size: 1.7rem; font-weight: 900; }
 .intro p { color: var(--muted); }
-.sample { display: inline-block; padding: 0 10px; border: 1px solid var(--line); border-radius: var(--r-pill); font-size: .8rem; color: var(--muted); }
+.sample { display: inline-block; justify-self: start; padding: 0 10px; border: 1px solid var(--line); border-radius: var(--r-pill); font-size: .8rem; color: var(--muted); }
 
 .stage { background: var(--stage); background-image: radial-gradient(120% 80% at 50% 0%, var(--stage) 0%, var(--stage-2) 100%); color: var(--stage-ink); border-radius: 24px; padding: 24px 16px; display: grid; gap: 24px; grid-template-columns: minmax(0, 1fr); align-items: start; }
 @media (min-width: 980px) { .stage { grid-template-columns: minmax(0, 1fr) 390px minmax(0, 1fr); padding: 36px 28px; gap: 28px; } }
@@ -188,18 +187,45 @@ svg.ic { width: 30px; height: 30px; fill: var(--accent-soft); stroke: currentCol
 	.bar { padding-top: 10px; min-height: 56px; }
 }
 
+/* v0.5：文書種別のまとまり、規程、右上のメニュー、文字の大きさ */
+.view.fs-lg { zoom: 1.12; }
+.view.fs-xl { zoom: 1.24; }
+.menubtn { border: 1px solid var(--line); background: var(--surface); border-radius: 10px; min-height: 40px; padding: 0 12px; font-size: .82rem; flex-shrink: 0; }
+.menubtn[aria-expanded="true"] { border-color: var(--accent); color: var(--accent); }
+.dropdown { position: absolute; top: 78px; left: 14px; right: 14px; z-index: 5; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 4px 0; display: grid; }
+.dropdown button { border: 0; background: transparent; text-align: left; min-height: 46px; padding: 0 16px; font-size: .95rem; }
+.dropdown button:hover { background: var(--accent-soft); }
+.group__title { display: flex; align-items: baseline; gap: 10px; font-size: .9rem; font-weight: 700; }
+.group__title span { font-size: .72rem; font-weight: 400; color: var(--muted); }
+.links { list-style: none; margin: 0; padding: 0; }
+.links li { border-bottom: 1px solid var(--line); }
+.links button { width: 100%; border: 0; background: transparent; text-align: left; min-height: 46px; padding: 8px 0; color: var(--accent); font-size: .9rem; display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.links small { color: var(--muted); font-size: .72rem; }
+.no { color: var(--muted); font-variant-numeric: tabular-nums; flex-shrink: 0; }
+.eyebrow { font-size: .78rem; color: var(--muted); }
+.textgrid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.textgrid button { width: 100%; min-height: 58px; border: 1px solid var(--line); background: var(--surface); border-radius: 12px; padding: 8px 12px; text-align: left; font-weight: 700; font-size: .82rem; line-height: 1.35; display: grid; gap: 2px; }
+.textgrid button:hover { border-color: var(--accent); }
+.textgrid small { font-weight: 400; color: var(--muted); font-size: .7rem; }
+.choice { display: flex; align-items: center; gap: 12px; min-height: 54px; padding: 8px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+.choice:has(input:checked) { border: 2px solid var(--accent); }
+.choice input { width: 20px; height: 20px; accent-color: var(--accent); flex-shrink: 0; }
+.choice--lg { font-size: 1.12rem; } .choice--xl { font-size: 1.24rem; }
+.decide { display: grid; gap: 6px; }
+.decide select, .decide input[type="text"] { width: 100%; border: 2px solid var(--line); border-radius: 10px; background: var(--surface); padding: 8px 10px; font-size: .88rem; }
+.btn:disabled { opacity: .45; cursor: default; }
+
 .foot { color: var(--muted); font-size: .88rem; display: grid; gap: 6px; max-width: 52em; }
 .foot ul { margin: 0; padding-left: 1.3em; }
 </style>
 <style>html { color-scheme: light dark; } body { margin: 0; } [hidden] { display: none !important; } img { max-width: 100%; }</style>
 </head>
 <body>
-
 <div class="page">
 	<header class="intro">
 		<span class="sample">操作できるモックアップ（内容はすべてサンプル）</span>
 		<h1>薬局の業務が、ひとつのアプリで見つかる</h1>
-		<p>お知らせの確認、手順書、緊急時の対応、記事の承認まで。画面をそのまま操作できます。立場を切り替えると、使えるメニューが変わります。</p>
+		<p>お知らせの確認、手順書、様式、規程、緊急時の対応、文書の承認まで。画面をそのまま操作できます。立場を切り替えると、使えるメニューが変わります。</p>
 	</header>
 
 	<section class="stage" aria-label="モックアップ">
@@ -215,6 +241,7 @@ svg.ic { width: 30px; height: 30px; fill: var(--accent-soft); stroke: currentCol
 				<div class="bar" id="bar"></div>
 				<div class="view" id="view" tabindex="-1"></div>
 				<nav class="tabs" id="tabs" aria-label="アプリのメニュー"></nav>
+				<div class="dropdown" id="dropdown" hidden></div>
 				<div class="toast" id="toast" role="status" hidden></div>
 			</div>
 		</div>
@@ -229,90 +256,120 @@ svg.ic { width: 30px; height: 30px; fill: var(--accent-soft); stroke: currentCol
 	<footer class="foot">
 		<p>このモックアップについて</p>
 		<ul>
-			<li>店舗名・氏名・記事・数値はすべて架空のサンプルです。操作した内容は保存されず、読み込み直すと元に戻ります。</li>
-			<li>ここで試せる機能（既読の確認、見直し期限、職種別の表示、既読状況の集計、承認の通知メール、理由つきの差し戻し、薬剤部承認）は、共通基盤 v0.4.0 に実装済みです。</li>
-			<li>画面の見た目は、実際のWordPressテーマと細部が異なります。記事の作成と公開は、実際にはWordPressの編集画面で行います。</li>
+			<li>店舗名・氏名・文書・規程・数値はすべて架空のサンプルです。操作した内容は保存されず、読み込み直すと元に戻ります。</li>
+			<li>ここで試せる機能（既読の確認、文書種別と業務領域、規程と文書の紐づけ、規程の採否と施行、必要文書の台帳、承認の通知、理由つきの差し戻し、薬剤部承認、文字の大きさ）は、共通基盤 v0.5.1 に実装済みです。</li>
+			<li>画面の見た目は、実際のWordPressテーマと細部が異なります。文書の作成・承認、規程の管理、台帳は、実際にはWordPressの管理画面で行います。</li>
 		</ul>
 	</footer>
 </div>
 
 <script>
 (function () {
-	var P = {
-		megaphone: 'M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z M15 9a4 4 0 0 1 0 6 M18 6a8 8 0 0 1 0 12',
-		alert: 'M12 3 2 20h20L12 3z M12 10v4 M12 17h.01',
-		pill: 'M10.5 20.5a5 5 0 0 1-7-7l8-8a5 5 0 0 1 7 7l-8 8z M7.5 9.5l7 7',
-		yen: 'M6 3h9l4 4v14H6z M14 3v5h5 M9 13h6 M9 17h6',
-		home: 'M5 10v10h14V10 M3 11 12 3l9 8 M10 20v-6h4v6',
-		store: 'M4 9v11h16V9 M4 9l1-5h14l1 5c-1 2-4 2-5 0-1 2-4 2-5 0-1 2-4 2-6 0z M9 20v-6h6v6',
-		cap: 'M2 9l10-5 10 5-10 5-10-5z M6 11v5c3 3 9 3 12 0v-5 M22 9v6',
-		file: 'M7 3h8l4 4v14H7z M15 3v4h4 M10 12h6 M10 16h4',
-		person: 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z M4 21a8 8 0 0 1 16 0z',
-		shield: 'M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z M9 12l2 2 4-4',
-		question: 'M4 5h16v11H9l-5 4z M10 9a2 2 0 1 1 3 1.7c-.7.4-1 .8-1 1.3 M12 14h.01',
-		card: 'M3 5h18v14H3z M8 11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z M5 16a3 3 0 0 1 6 0 M14 9h4 M14 13h4',
-		pencil: 'M4 20l1-4L16 5l3 3L8 19l-4 1z M14 7l3 3',
-		check: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z M8.5 12l2.5 2.5 4.5-5',
-		chart: 'M4 4v16h16 M8 16v-5 M12 16V8 M16 16v-3',
-		search: 'M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14z M20 20l-4-4',
-		back: 'M15 5l-7 7 7 7',
-		list: 'M8 6h12 M8 12h12 M8 18h12 M4 6h.01 M4 12h.01 M4 18h.01'
-	};
+	var P = {"megaphone": ["M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z", "M15 9a4 4 0 0 1 0 6", "M18 6a8 8 0 0 1 0 12"], "alert": ["M12 3 2 20h20L12 3z", "M12 10v4", "M12 17h.01"], "pill": ["M10.5 20.5a5 5 0 0 1-7-7l8-8a5 5 0 0 1 7 7l-8 8z", "M7.5 9.5l7 7"], "yen": ["M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z", "M8.5 7.5 12 12l3.5-4.5", "M12 12v5", "M9 12.5h6", "M9 15h6"], "home": ["M5 10v10h14V10", "M3 11 12 3l9 8", "M10 20v-6h4v6"], "store": ["M4 9v11h16V9", "M4 9l1-5h14l1 5c-1 2-4 2-5 0-1 2-4 2-5 0-1 2-4 2-6 0z", "M9 20v-6h6v6"], "cap": ["M2 9l10-5 10 5-10 5-10-5z", "M6 11v5c3 3 9 3 12 0v-5", "M22 9v6"], "file": ["M7 3h8l4 4v14H7z", "M15 3v4h4", "M10 12h6", "M10 16h4"], "person": ["M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z", "M4 21a8 8 0 0 1 16 0z"], "shield": ["M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z", "M9 12l2 2 4-4"], "question": ["M4 5h16v11H9l-5 4z", "M10 9a2 2 0 1 1 3 1.7c-.7.4-1 .8-1 1.3", "M12 14h.01"], "card": ["M3 5h18v14H3z", "M8 11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z", "M5 16a3 3 0 0 1 6 0", "M14 9h4", "M14 13h4"], "pencil": ["M4 20l1-4L16 5l3 3L8 19l-4 1z", "M14 7l3 3"], "check": ["M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z", "M8.5 12l2.5 2.5 4.5-5"], "chart": ["M4 4v16h16", "M8 16v-5", "M12 16V8", "M16 16v-3"], "search": ["M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14z", "M20 20l-4-4"], "clipboard": ["M8 4h8v3H8z", "M6 5.5H5v15h14v-15h-1", "M9 11h6", "M9 15h4"], "cart": ["M3 4h2l2.5 11h10L20 7H6.5", "M9 20a1 1 0 1 0 0-2 1 1 0 0 0 0 2z", "M17 20a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"], "bag": ["M5 8h14l-1 12H6L5 8z", "M9 8V6a3 3 0 0 1 6 0v2"], "heart": ["M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"], "monitor": ["M3 5h18v11H3z", "M9 20h6", "M12 16v4"], "lock": ["M6 11h12v9H6z", "M8.5 11V8a3.5 3.5 0 0 1 7 0v3", "M12 14.5v2"], "stamp": ["M9 4h6v6l2 4H7l2-4z", "M5 14h14v3H5z", "M5 20h14"], "link": ["M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1", "M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"], "checklist": ["M4 6l1.5 1.5L8 5", "M4 12l1.5 1.5L8 11", "M4 18l1.5 1.5L8 17", "M11 6h9", "M11 12h9", "M11 18h9"], "book": ["M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3V4z", "M5 17a3 3 0 0 1 3-3h11", "M9 8h6"], "clock": ["M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z", "M12 7v5l3 2"], "back": ["M15 5l-7 7 7 7"], "list": ["M8 6h12", "M8 12h12", "M8 18h12", "M4 6h.01", "M4 12h.01", "M4 18h.01"]};
 	function ic(name) {
-		return '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">' + P[name].split(' M').map(function (d, i) { return '<path d="' + (i ? 'M' : '') + d + '"/>'; }).join('') + '</svg>';
+		return '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">' + (P[name] || P.file).map(function (d) { return '<path d="' + d + '"/>'; }).join('') + '</svg>';
 	}
 	function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
 
 	var ROLES = {
-		staff: { name: '店舗スタッフ', who: '西町店・医療事務<br>高橋 さん', desc: '探す・読む・お知らせを確認する', notes: ['赤い数字は、まだ確認していないお知らせの件数です。', '「お知らせ」を開いて「確認しました」を押すと、数字が減ります。', '薬剤師向けの記事は、医療事務の画面には出ません。'] },
-		writer: { name: '管理薬剤師・店長', who: '中央店・薬剤師<br>佐藤 さん', desc: '記事を書いて、本部に承認を依頼する', notes: ['「記事を書く」から承認を依頼すると、本部の承認者にメールが届きます。写真やPDFも添付できます。', '「自分の記事」で差し戻しの理由を確認し、直して再依頼できます。', '公開できるのは本部の承認者だけです。'] },
-		editor: { name: '本部の編集者（業務部）', who: '本部・業務部<br>小林 さん', desc: '承認・差し戻し・既読状況の確認', notes: ['「承認待ち」で内容を読み、公開するか差し戻すかを決めます。', '医薬品・算定に関わる記事は公開できません。差し戻しはできます。', '「既読状況」で、店舗ごとの確認率と未確認の人が分かります。'] },
-		approver: { name: '薬剤部の承認者', who: '本部・薬剤部<br>山田 さん', desc: '医薬品に関わる記事も承認できる', notes: ['医薬品・算定に関わる記事を公開できるのは、この立場だけです。', '差し戻しには理由の入力が必要で、書いた人にメールで届きます。', '承認の依頼メールも、医薬品の記事は薬剤部の承認者だけに届きます。'] }
+		staff: { name: '店舗スタッフ', who: '西町店・医療事務　高橋 さん', job: '医療事務', store: '西町店（西エリア）', can: '閲覧', desc: '探す・読む・お知らせを確認する', notes: ['赤い数字は、まだ確認していないお知らせの件数です。', 'メニューから仕事の内容ごとに探せます。文書は「こんなときは → 手順書 → 様式」の順に並びます。', '右上の「メニュー」から、文字の大きさを変えられます。'] },
+		writer: { name: '管理薬剤師・店長', who: '中央店・薬剤師　佐藤 さん', job: '薬剤師', store: '中央店（東エリア）', can: '文書を書く（公開は本部の承認後）', desc: '文書を書いて、本部に承認を依頼する', notes: ['「文書を書く」から承認を依頼すると、本部の承認者にメールが届きます。', '文書に「根拠となる規程」を付けると、規程の側にも一覧されます。', '「自分の文書」で差し戻しの理由を確認し、直して再依頼できます。'] },
+		editor: { name: '本部の編集者（業務部）', who: '本部・業務部　小林 さん', job: '薬剤師', store: '本部', can: '本部（承認・編集）', desc: '承認・差し戻し・既読状況・規程の確認', notes: ['「承認待ち」で内容を読み、公開するか差し戻すかを決めます。', '「規程の管理」で、雛形の項目ごとに採否を記録します。全項目が決まるまで施行できません。', '医薬品・算定に関わる文書は公開できません（差し戻しはできます）。'] },
+		approver: { name: '薬剤部の承認者', who: '本部・薬剤部　山田 さん', job: '薬剤師', store: '本部', can: '本部（承認・編集）・薬剤部の承認者', desc: '医薬品に関わる文書も承認できる', notes: ['医薬品・算定に関わる文書を公開できるのは、この立場だけです。', '「必要文書の台帳」で、整備が求められる文書の該当・担当・充足を記録します。', '差し戻しには理由の入力が必要で、書いた人にメールで届きます。'] }
 	};
-	var CATS = {
-		emergency: { name: '緊急時', icon: 'alert' },
-		dispensing: { name: '調剤・服薬指導', icon: 'pill' },
-		insurance: { name: '保険・請求', icon: 'yen' },
-		homecare: { name: '在宅・施設', icon: 'home' },
-		storeops: { name: '店舗運営', icon: 'store' },
-		training: { name: '研修・教育', icon: 'cap' },
-		forms: { name: '書式', icon: 'file' },
-		hr: { name: '人事・労務', icon: 'person' },
-		compliance: { name: '規程', icon: 'shield' }
+	var DOMAINS = {
+		emergency: { name: '事故・緊急時', short: '事故・緊急時', icon: 'alert', home: true, ch: [6] },
+		dispensing: { name: '調剤・医療安全', short: '調剤', icon: 'pill', home: true, ch: [6] },
+		pharma: { name: '服薬指導・薬歴・患者支援', short: '服薬指導・薬歴', icon: 'clipboard', home: true, ch: [7] },
+		insurance: { name: '保険・算定・請求', short: '保険・請求', icon: 'yen', home: true, ch: [] },
+		inventory: { name: '医薬品の管理・発注', short: '発注・在庫', icon: 'cart', home: true, ch: [] },
+		homecare: { name: '在宅・地域連携', short: '在宅', icon: 'home', home: true, ch: [] },
+		otc: { name: 'OTC・販売・健康相談', short: 'OTC・販売', icon: 'bag', home: true, ch: [] },
+		patient: { name: '患者対応・相談・苦情', short: '患者対応', icon: 'heart', home: true, ch: [] },
+		storeops: { name: '店舗業務', short: '店舗業務', icon: 'store', home: true, ch: [] },
+		hr: { name: '勤怠・人事・労務', short: '勤怠・人事', icon: 'clock', home: true, ch: [] },
+		systems: { name: 'システムの使い方・AI利用', short: 'システム', icon: 'monitor', home: true, ch: [13] },
+		training: { name: '入社・研修', short: '入社・研修', icon: 'cap', home: true, ch: [] },
+		security: { name: '個人情報・情報セキュリティ', short: '情報セキュリティ', icon: 'lock', home: false, ch: [13] },
+		compliance: { name: '届出・行政対応', short: '届出・行政', icon: 'stamp', home: false, ch: [] },
+		management: { name: '経営・組織・連絡', short: '経営・組織', icon: 'person', home: false, ch: [] },
+		vendors: { name: '委託先・取引先', short: '委託先', icon: 'link', home: false, ch: [] },
+		audit: { name: '監査・改善', short: '監査・改善', icon: 'checklist', home: false, ch: [] }
 	};
+	var KINDS = ['こんなときは', '手順書・マニュアル', 'ガイドライン・基準', '様式・帳票', 'FAQ', '研修資料'];
+	var NO_BODY = '<p>モックアップでは、この文書の本文を省略しています。実際の画面では、目的・手順・注意点の順に表示されます。</p>';
 	var ARTICLES = [
-		{ id: 'a6', cat: 'emergency', type: '手順書', title: '調剤過誤が起きたときの初動対応', updated: '2026年8月4日', owner: '薬剤部 山田', review: '2027年2月4日', aud: '全員', source: '医療安全管理指針（社内）第3章',
-			body: '<h4>最初の10分でやること</h4><ol><li>患者さんの服用状況と体調を確認する。服用済みなら、すぐに管理薬剤師へ伝える。</li><li>処方医に電話で報告し、指示を受ける。</li><li>正しい薬剤を用意し、交換の方法を患者さんと決める。</li><li>エリアマネージャーに電話で第一報を入れる。</li></ol><h4>当日中にやること</h4><ul><li>ヒヤリハット報告書を記入し、本部の薬剤部へ送る。</li><li>薬歴に経過を記録する。</li></ul>' },
-		{ id: 'a7', cat: 'emergency', type: '手順書', title: '停電・システム障害時の調剤継続手順', updated: '2026年6月18日', owner: '業務部 小林', review: '2026年12月18日', aud: '全員' },
-		{ id: 'a8', cat: 'emergency', type: '手順書', title: '地震・水害時の安否報告と開局判断', updated: '2026年9月1日', owner: '総務 中村', review: '2027年3月1日', aud: '全員' },
-		{ id: 'a1', cat: 'dispensing', type: '手順書', title: '一包化の手順と監査のポイント', updated: '2026年9月20日', owner: '薬剤部 山田', review: '2027年3月20日', aud: '薬剤師', job: '薬剤師', source: '社内調剤内規 第4章',
-			body: '<h4>目的</h4><p>服用時点ごとの入れ間違いを防ぎ、誰が監査しても同じ基準で確認できるようにする。</p><h4>手順</h4><ol><li>処方内容と一包化の指示（医師の指示・患者さんの希望）を確認する。</li><li>吸湿性・遮光が必要な薬剤を除外し、別包にする。</li><li>分包機に錠剤をセットし、最初の1包を目視で確認する。</li><li>全包を、錠数・刻印・服用時点の印字の順に監査する。</li></ol><h4>注意点</h4><ul><li>半錠は割面の向きがそろっているかまで見る。</li><li>監査は調製した人とは別の薬剤師が行う。</li></ul>' },
-		{ id: 'a2', cat: 'dispensing', type: '手順書', title: '疑義照会の記録方法', updated: '2026年7月30日', owner: '薬剤部 山田', review: '2027年1月30日', aud: '薬剤師', job: '薬剤師' },
-		{ id: 'a3', cat: 'dispensing', type: 'FAQ', title: '吸入薬の指導で患者さんによく聞かれること', updated: '2026年5月12日', owner: '薬剤部 山田', review: '2026年11月12日', aud: '薬剤師', job: '薬剤師' },
-		{ id: 'a4', cat: 'insurance', type: '手順書', title: 'レセプト返戻の再請求手順', updated: '2026年9月9日', owner: '業務部 小林', review: '2027年3月9日', aud: '全員' },
-		{ id: 'a5', cat: 'insurance', type: 'FAQ', title: '公費負担医療の受給者証は何を確認する？', updated: '2026年4月22日', owner: '業務部 小林', review: '2026年10月22日', aud: '全員' },
-		{ id: 'a9', cat: 'homecare', type: '手順書', title: '在宅訪問の準備と報告書の書き方', updated: '2026年8月25日', owner: '薬剤部 山田', review: '2027年2月25日', aud: '薬剤師', job: '薬剤師' },
-		{ id: 'a14', cat: 'storeops', type: '手順書', title: '開店・閉店時のチェックリスト', updated: '2026年3月2日', owner: '業務部 小林', review: '2026年9月2日', aud: '全員', overdue: true,
-			body: '<h4>開店前</h4><ol><li>調剤室の温度・湿度を記録する。</li><li>分包機・レセコン・レジを起動する。</li><li>麻薬金庫の施錠と帳簿の残数を確認する。</li></ol><h4>閉店後</h4><ol><li>レジを締め、売上を報告する。</li><li>冷所保管品の庫内温度を記録する。</li><li>調剤室・金庫・出入口を施錠する。</li></ol>' },
-		{ id: 'a15', cat: 'storeops', type: 'FAQ', title: '発注の締め時間を過ぎたときはどうする？', updated: '2026年7月7日', owner: '業務部 小林', review: '2027年1月7日', aud: '全員' },
-		{ id: 'a10', cat: 'training', type: '研修資料', title: '入社1か月で読む記事リスト', updated: '2026年4月1日', owner: '人事 伊藤', review: '2027年4月1日', aud: '全員' },
-		{ id: 'a11', cat: 'forms', type: '書式', title: 'ヒヤリハット報告書（書式）', updated: '2026年2月14日', owner: '薬剤部 山田', review: '2027年2月14日', aud: '全員' },
-		{ id: 'a16', cat: 'forms', type: '書式', title: '在宅訪問 報告書（書式）', updated: '2026年8月25日', owner: '薬剤部 山田', review: '2027年2月25日', aud: '薬剤師', job: '薬剤師' },
-		{ id: 'a12', cat: 'hr', type: '手順書', title: '有給休暇の申請方法', updated: '2026年4月1日', owner: '人事 伊藤', review: '2027年4月1日', aud: '全員' },
-		{ id: 'a13', cat: 'compliance', type: '規程', title: '個人情報の取扱い 早わかり', updated: '2026年5月30日', owner: '総務 中村', review: '2027年5月30日', aud: '全員' }
+		{ id: 'a1', cats: ['emergency', 'dispensing'], kind: 'こんなときは', title: '薬を間違えて渡してしまった', updated: '2026年9月12日', owner: '薬剤部 山田', review: '2027年3月12日', ver: '1.2', since: '2026年9月12日', rules: ['r64'], forms: ['a6'],
+			body: '<h4>まずやること（10分以内）</h4><ol><li>患者さんに連絡し、服用したかどうかと体調を確認する。服用済みなら、すぐ管理薬剤師へ。</li><li>処方医に電話で報告し、指示を受ける。</li><li>正しい薬を用意し、交換の方法を患者さんと決める。</li><li>エリアの責任者に電話で第一報を入れる。</li></ol><h4>当日中にやること</h4><ul><li>ヒヤリハット報告書を書き、薬剤部へ送る。</li><li>薬歴に経過を記録する。</li></ul>' },
+		{ id: 'a2', cats: ['emergency', 'systems'], kind: 'こんなときは', title: '薬歴・レセコンが開かない', updated: '2026年8月3日', owner: '業務部 小林', review: '2027年2月3日', ver: '1.0', since: '2026年8月3日', rules: [], forms: [] },
+		{ id: 'a3', cats: ['emergency', 'security', 'systems'], kind: 'こんなときは', title: '患者さんの情報を誤って送ってしまった', updated: '2026年7月20日', owner: '総務 中村', review: '2027年1月20日', ver: '1.1', since: '2026年7月20日', rules: ['r131'], forms: [] },
+		{ id: 'a4', cats: ['dispensing'], kind: '手順書・マニュアル', title: '疑義照会の手順', updated: '2026年10月1日', owner: '薬剤部 山田', review: '2027年4月1日', ver: '2.0', since: '2026年10月1日', job: '薬剤師', rules: ['r62'], forms: ['a7'],
+			body: '<h4>手順</h4><ol><li>処方内容に疑問があれば、調剤を始める前に処方医へ照会する。</li><li>照会した内容と回答を、照会記録の様式に書く。</li><li>変更があった場合は、処方箋の備考と薬歴に記録する。</li></ol><h4>注意点</h4><ul><li>患者さんには、確認に時間がかかる理由を伝える。</li><li>連絡がつかないときは、管理薬剤師に相談する。</li></ul>' },
+		{ id: 'a5', cats: ['dispensing'], kind: '手順書・マニュアル', title: '疑義照会の手順（中央店の補足）', updated: '2026年10月3日', owner: '中央店 佐藤', review: '2027年4月3日', ver: '1.0', since: '2026年10月3日', job: '薬剤師', rules: ['r62'], forms: [], supplement: { store: '中央店', base: 'a4' },
+			body: '<p>中央店で、門前の医療機関へ照会するときの連絡先と時間帯をまとめています。</p><ul><li>午前の診療中は、受付経由で折り返しを依頼する。</li><li>休診日の照会は、管理薬剤師の携帯に連絡する。</li></ul>' },
+		{ id: 'a8', cats: ['dispensing'], kind: 'ガイドライン・基準', title: '一包化の判断基準と監査のポイント', updated: '2026年9月20日', owner: '薬剤部 山田', review: '2027年3月20日', ver: '1.3', since: '2026年9月20日', job: '薬剤師', rules: ['r63'], forms: [] },
+		{ id: 'a6', cats: ['dispensing', 'emergency'], kind: '様式・帳票', title: 'ヒヤリハット報告書（様式）', updated: '2026年2月14日', owner: '薬剤部 山田', review: '2027年2月14日', ver: '3.0', since: '2026年2月14日', rules: ['r64'], forms: [], body: '<p>記入した報告書は、薬剤部の共有フォルダに保存してください。患者さんの氏名が入った記録は、このWikiには置きません。</p>' },
+		{ id: 'a7', cats: ['dispensing'], kind: '様式・帳票', title: '疑義照会記録（様式）', updated: '2026年10月1日', owner: '薬剤部 山田', review: '2027年4月1日', ver: '2.0', since: '2026年10月1日', rules: ['r62'], forms: [] },
+		{ id: 'a9', cats: ['dispensing'], kind: '様式・帳票', title: '疑義照会メモ（旧様式）', updated: '2025年4月1日', owner: '薬剤部 山田', review: '', ver: '1.0', since: '2025年4月1日', rules: [], forms: [], retired: { reason: '記録様式を1つに統合したため', next: 'a7' } },
+		{ id: 'a10', cats: ['pharma'], kind: 'FAQ', title: '吸入薬の指導で患者さんによく聞かれること', updated: '2026年5月12日', owner: '薬剤部 山田', review: '2026年11月12日', ver: '1.0', since: '2026年5月12日', job: '薬剤師', rules: [], forms: [] },
+		{ id: 'a11', cats: ['pharma'], kind: '手順書・マニュアル', title: '薬歴の書き方と点検', updated: '2026年6月30日', owner: '薬剤部 山田', review: '2026年12月30日', ver: '1.1', since: '2026年6月30日', job: '薬剤師', rules: [], forms: [] },
+		{ id: 'a12', cats: ['insurance'], kind: '手順書・マニュアル', title: '返戻が来たときの再請求手順', updated: '2026年9月9日', owner: '業務部 小林', review: '2027年3月9日', ver: '1.0', since: '2026年9月9日', rules: [], forms: [] },
+		{ id: 'a13', cats: ['insurance'], kind: 'FAQ', title: '公費負担医療の受給者証は何を確認する？', updated: '2026年4月22日', owner: '業務部 小林', review: '2026年10月22日', ver: '1.0', since: '2026年4月22日', rules: [], forms: [] },
+		{ id: 'a14', cats: ['inventory'], kind: '手順書・マニュアル', title: '回収対象の医薬品が出たときの対応', updated: '2026年8月18日', owner: '薬剤部 山田', review: '2027年2月18日', ver: '1.0', since: '2026年8月18日', rules: [], forms: [] },
+		{ id: 'a15', cats: ['homecare'], kind: '手順書・マニュアル', title: '在宅訪問の準備と報告書の書き方', updated: '2026年8月25日', owner: '薬剤部 山田', review: '2027年2月25日', ver: '1.0', since: '2026年8月25日', job: '薬剤師', rules: [], forms: [] },
+		{ id: 'a16', cats: ['otc'], kind: '手順書・マニュアル', title: '濫用のおそれのある医薬品を販売するときの確認', updated: '2026年7月1日', owner: '業務部 小林', review: '2027年1月1日', ver: '1.0', since: '2026年7月1日', rules: [], forms: [] },
+		{ id: 'a17', cats: ['patient'], kind: 'ガイドライン・基準', title: '苦情・迷惑行為への対応基準', updated: '2026年6月2日', owner: '総務 中村', review: '2026年12月2日', ver: '1.0', since: '2026年6月2日', rules: [], forms: [] },
+		{ id: 'a18', cats: ['storeops'], kind: '手順書・マニュアル', title: '開店・閉店時のチェックリスト', updated: '2026年3月2日', owner: '業務部 小林', review: '2026年9月2日', ver: '1.0', since: '2026年3月2日', overdue: true, rules: [], forms: [],
+			body: '<h4>開店前</h4><ol><li>調剤室の温度・湿度を記録する。</li><li>分包機・レセコン・レジを起動する。</li><li>麻薬金庫の施錠と帳簿の残数を確認する。</li></ol><h4>閉店後</h4><ol><li>レジを締め、売上を報告する。</li><li>冷所保管品の庫内温度を記録する。</li></ol>' },
+		{ id: 'a19', cats: ['hr'], kind: '手順書・マニュアル', title: '有給休暇の申請方法', updated: '2026年4月1日', owner: '人事 伊藤', review: '2027年4月1日', ver: '1.0', since: '2026年4月1日', rules: [], forms: [] },
+		{ id: 'a20', cats: ['training'], kind: '研修資料', title: '入社1週間で読む文書リスト', updated: '2026年4月1日', owner: '人事 伊藤', review: '2027年4月1日', ver: '1.0', since: '2026年4月1日', rules: [], forms: [] },
+		{ id: 'a21', cats: ['security'], kind: 'ガイドライン・基準', title: '個人情報の取扱い 早わかり', updated: '2026年5月30日', owner: '総務 中村', review: '2027年5月30日', ver: '1.0', since: '2026年5月30日', rules: ['r131'], forms: [] },
+		{ id: 'a22', cats: ['systems'], kind: 'ガイドライン・基準', title: 'AIを仕事で使うときの決まり', updated: '2026年9月1日', owner: '総務 中村', review: '2027年3月1日', ver: '1.0', since: '2026年9月1日', rules: [], forms: [] }
+	];
+	var CHAPTERS = [
+		{ no: 6, part: '第Ⅱ部', title: '調剤・医療安全', status: 'enacted', date: '2026年10月1日', items: [
+			{ id: 'r61', no: '6-1', title: '調剤業務の基本方針', body: '当社は、患者さんの安全を最優先に、処方箋の受付から交付までの各工程で確認を行います。手順は全店で統一し、店舗の事情による違いは、補足として文書に残します。' },
+			{ id: 'r62', no: '6-2', title: '処方内容の確認と疑義照会', body: '処方内容に疑問があるときは、調剤を始める前に処方医へ照会します。照会の内容と回答は記録に残し、薬歴にも反映します。' },
+			{ id: 'r63', no: '6-3', title: '調剤・監査・交付', body: '調製した人とは別の薬剤師が監査を行います。一人で勤務する時間帯は、定めた確認手順に従い、確認した記録を残します。' },
+			{ id: 'r64', no: '6-4', title: '事故が起きたときの初動', body: '誤った薬を渡したことに気づいたときは、患者さんの安全確認を最優先に行い、処方医と責任者へ速やかに報告します。経過は記録し、原因の分析と再発防止に使います。' }
+		] },
+		{ no: 13, part: '第Ⅲ部', title: '個人情報・情報セキュリティ', status: 'enacted', date: '2026年10月1日', items: [
+			{ id: 'r131', no: '13-1', title: '患者情報の取扱い', body: '患者さんの情報は、業務に必要な範囲でだけ扱います。誤送信や紛失に気づいたときは、隠さずにすぐ責任者へ報告します。' },
+			{ id: 'r132', no: '13-2', title: 'アカウントとパスワード', body: 'アカウントは一人に一つとし、共用しません。共用の端末では、席を離れるときにログアウトします。' }
+		] },
+		{ no: 7, part: '第Ⅱ部', title: '服薬指導・薬歴', status: 'template', date: '', items: [
+			{ id: 'r71', no: '7-1', title: '服薬指導の基本方針', body: '当社は、患者さんが薬を正しく安全に使えるよう、必要な情報をわかりやすく伝えます。', decision: '', reason: '' },
+			{ id: 'r72', no: '7-2', title: '薬歴の作成と点検', body: '薬歴は、指導を行った当日中に記載します。管理薬剤師は、定期的に記載内容を点検します。', decision: '', reason: '' },
+			{ id: 'r73', no: '7-3', title: '服薬後のフォローアップ', body: '必要と判断した患者さんには、服薬後の状況を確認し、結果を薬歴に記録します。', decision: '', reason: '' }
+		] }
 	];
 	var NOTICES = [
-		{ id: 'n1', title: '去痰薬の出荷調整に伴う代替提案の手順', important: true, ack: true, due: '10月15日', date: '10月12日', from: '薬剤部', aud: '薬剤師', job: '薬剤師', body: '<p>一部の去痰薬で出荷調整が続いています。在庫が不足した場合は、次の手順で対応してください。</p><ol><li>在庫と入荷予定を確認する。</li><li>処方医へ疑義照会し、代替薬または処方日数の変更を相談する。</li><li>患者さんへ変更の理由を説明し、薬歴に記録する。</li></ol>' },
-		{ id: 'n2', title: '年末年始の営業時間と当番体制', important: true, ack: true, due: '10月31日', date: '10月10日', from: '業務部', aud: '全員', body: '<p>12月29日から1月3日までの営業時間と当番店舗を決めました。各店舗の勤務表は店長から配布します。</p><ul><li>当番店舗：中央店（12月30日・1月2日）</li><li>休業中の緊急連絡先は「緊急時」の記事を確認してください。</li></ul>' },
+		{ id: 'n1', title: '去痰薬の出荷調整に伴う代替提案の手順', important: true, ack: true, due: '10月15日', date: '10月12日', from: '薬剤部', aud: '薬剤師', job: '薬剤師', body: '<p>一部の去痰薬で出荷調整が続いています。在庫が不足した場合は、次の手順で対応してください。</p><ol><li>在庫と入荷予定を確認する。</li><li>処方医へ疑義照会し、代替薬または処方日数の変更を相談する。</li><li>患者さんへ変更の理由を説明し、薬歴に記録する。</li></ol><p>手順の正本は「疑義照会の手順」です。</p>' },
+		{ id: 'n2', title: '年末年始の営業時間と当番体制', important: true, ack: true, due: '10月31日', date: '10月10日', from: '業務部', aud: '全員', body: '<p>12月29日から1月3日までの営業時間と当番店舗を決めました。各店舗の勤務表は店長から配布します。</p>' },
 		{ id: 'n3', title: 'インフルエンザ予防接種の費用補助について', ack: false, date: '10月8日', from: '人事', aud: '全員', body: '<p>今年度も予防接種の費用を補助します。領収書を添えて、11月末までに店長へ提出してください。</p>' }
 	];
 	var STORES = [['中央店', 9, 10], ['駅前店', 6, 8], ['西町店', 3, 9], ['南台店', 7, 7], ['本部', 5, 6]];
+	var LEDGER = [
+		{ name: '医療安全管理指針', kind: 'ガイドライン・基準', basis: '法令', need: '指針の整備と職員への周知', applies: 'yes', owner: '薬剤部 山田', doc: '', done: false },
+		{ name: '医薬品の安全使用のための業務手順書', kind: '手順書・マニュアル', basis: '法令', need: '手順書の整備と、手順に基づく業務の実施', applies: 'yes', owner: '薬剤部 山田', doc: '', done: false },
+		{ name: '疑義照会の手順', kind: '手順書・マニュアル', basis: '実務上の必要', need: '文書の整備', applies: 'yes', owner: '薬剤部 山田', doc: 'a4', done: true },
+		{ name: '一人薬剤師勤務時の安全確保手順', kind: '手順書・マニュアル', basis: '実務上の必要', need: '文書の整備', applies: '', owner: '', doc: '', done: false },
+		{ name: '事故・ヒヤリハット報告書', kind: '様式・帳票', basis: '実務上の必要', need: '様式の整備と報告の運用', applies: 'yes', owner: '薬剤部 山田', doc: 'a6', done: true }
+	];
 
 	var S = {
-		role: 'staff', stack: [{ n: 'home' }], acked: {}, toast: '', mail: null,
+		role: 'staff', stack: [{ n: 'home' }], acked: {}, toast: '', mail: null, font: '', menu: false,
+		history: [
+			['10月3日', '公開', '疑義照会の手順（中央店の補足）', '新規作成'],
+			['10月1日', '改訂', '疑義照会の手順', '照会記録の様式を統合'],
+			['10月1日', '廃止', '疑義照会メモ（旧様式）', '記録様式を1つに統合したため'],
+			['10月1日', '版の確定', '規程 Ver.1.1（6項目）', '10月1日 施行'],
+			['10月1日', '施行', '第13章 個人情報・情報セキュリティ（2項目）', ''],
+			['10月1日', '施行', '第6章 調剤・医療安全（4項目）', '']
+		],
 		pending: [
-			{ id: 'p1', title: '吸入指導の手順（ドライパウダー製剤）', author: '中央店 管理薬剤師 佐藤', mine: true, kind: '新規', pharm: true, at: '10月11日', cat: '調剤・服薬指導', status: 'pending', body: '<h4>手順</h4><ol><li>吸入器の種類と、患者さんが以前に使ったことがあるかを確認する。</li><li>練習用の器具で、薬剤師が先に吸入の動作を見せる。</li><li>患者さんに実際にやってもらい、吸う速さと息止めを確認する。</li><li>うがいの必要性を説明する。</li></ol>' },
-			{ id: 'p2', title: '開店・閉店時のチェックリスト', author: '駅前店 店長 鈴木', kind: '改訂', pharm: false, at: '10月9日', cat: '店舗運営', reason: 'レジ締めの手順が変わったため', status: 'pending', body: '<h4>閉店後（変更点）</h4><ol><li>レジを締め、売上をアプリから報告する（紙の日報は廃止）。</li><li>冷所保管品の庫内温度を記録する。</li></ol>' }
+			{ id: 'p1', title: '吸入指導の手順（ドライパウダー製剤）', author: '中央店 管理薬剤師 佐藤', mine: true, kind: '新規', pharm: true, at: '10月11日', cat: 'pharma', docKind: '手順書・マニュアル', status: 'pending', body: '<h4>手順</h4><ol><li>吸入器の種類と、患者さんが以前に使ったことがあるかを確認する。</li><li>練習用の器具で、薬剤師が先に吸入の動作を見せる。</li><li>患者さんに実際にやってもらい、吸う速さと息止めを確認する。</li></ol>' },
+			{ id: 'p2', title: '開店・閉店時のチェックリスト', author: '駅前店 店長 鈴木', kind: '改訂', pharm: false, at: '10月9日', cat: 'storeops', docKind: '手順書・マニュアル', reason: 'レジ締めの手順が変わったため', status: 'pending', body: '<h4>閉店後（変更点）</h4><ol><li>レジを締め、売上をアプリから報告する（紙の日報は廃止）。</li><li>冷所保管品の庫内温度を記録する。</li></ol>' }
 		],
 		mine: [
 			{ id: 'm1', title: '麻薬の廃棄手順（写真つき）', status: 'returned', at: '10月7日', comment: '2枚目の写真に患者さんの氏名が写っています。差し替えてから、もう一度依頼してください。', by: '薬剤部 山田' },
@@ -321,28 +378,43 @@ svg.ic { width: 30px; height: 30px; fill: var(--accent-soft); stroke: currentCol
 	};
 	var $ = function (id) { return document.getElementById(id); };
 	var cur = function () { return S.stack[S.stack.length - 1]; };
-	function job() { return S.role === 'staff' ? '医療事務' : '薬剤師'; }
 	function isHQ() { return S.role === 'editor' || S.role === 'approver'; }
 	function me() { return { staff: '西町店 高橋', writer: '中央店 管理薬剤師 佐藤', editor: '業務部 小林', approver: '薬剤部 山田' }[S.role]; }
-	function canSee(x) { return isHQ() || !x.job || x.job === job(); }
-	function catKey(name) { return Object.keys(CATS).filter(function (k) { return CATS[k].name === name; })[0] || 'storeops'; }
-	function addArticle(title, catName, bodyHtml, owner, pharm) { ARTICLES.unshift({ id: 'x' + Date.now(), cat: catKey(catName), type: '手順書', title: title, updated: '2026年10月12日', owner: owner, review: '2027年4月12日', aud: pharm ? '薬剤師' : '全員', job: pharm ? '薬剤師' : undefined, body: bodyHtml }); }
-	function visible(list) { return list.filter(canSee); }
-	function unread() { return visible(NOTICES).filter(function (n) { return n.ack && !S.acked[S.role + n.id]; }); }
+	function canSee(x) { return isHQ() || !x.job || x.job === ROLES[S.role].job; }
+	function art(id) { return ARTICLES.filter(function (a) { return a.id === id; })[0]; }
+	function live(list) { return list.filter(function (a) { return canSee(a) && !a.retired; }); }
+	function rule(id) { var hit = null; CHAPTERS.forEach(function (c) { c.items.forEach(function (i) { if (i.id === id) hit = { item: i, ch: c }; }); }); return hit; }
+	function docsForRule(id) { return live(ARTICLES).filter(function (a) { return a.rules.indexOf(id) > -1; }); }
+	function unread() { return NOTICES.filter(canSee).filter(function (n) { return n.ack && !S.acked[S.role + n.id]; }); }
 	function pendingCount() { return S.pending.filter(function (p) { return p.status === 'pending'; }).length; }
-	function go(n, p) { S.stack.push({ n: n, p: p }); render(true); }
+	function go(n, p) { S.stack.push({ n: n, p: p }); S.menu = false; render(true); }
 	function toast(msg) { S.toast = msg; render(); clearTimeout(toast.t); toast.t = setTimeout(function () { S.toast = ''; $('toast').hidden = true; }, 2600); }
+	function log(kind, title, reason) { S.history.unshift(['10月12日', kind, title, reason || '']); }
+	function domainKey(name) { return Object.keys(DOMAINS).filter(function (k) { return DOMAINS[k].name === name; })[0] || 'storeops'; }
+	function addArticle(title, cat, kind, bodyHtml, owner, pharm) {
+		ARTICLES.unshift({ id: 'x' + Date.now(), cats: [cat], kind: kind || '手順書・マニュアル', title: title, updated: '2026年10月12日', owner: owner, review: '2027年4月12日', ver: '1.0', since: '2026年10月12日', job: pharm ? '薬剤師' : undefined, rules: [], forms: [], body: bodyHtml });
+		log('公開', title, '新規作成');
+	}
 
 	function tile(icon, label, attrs, cls, num) {
 		return '<li><button type="button" class="tile ' + (cls || '') + '" ' + attrs + '>' + (num ? '<span class="num" aria-label="' + num + '件">' + num + '</span>' : '') + ic(icon) + '<span>' + label + '</span></button></li>';
 	}
 	function rowArticle(a) {
-		return '<li><button type="button" class="row" data-go="article" data-id="' + a.id + '"><span class="badges"><span class="b">' + a.type + '</span>' + (a.overdue ? '<span class="b b--warn">内容確認中</span>' : '') + '</span><span class="row__t">' + esc(a.title) + '</span><span class="row__m">' + a.updated + ' 更新</span></button></li>';
+		return '<li><button type="button" class="row" data-go="article" data-id="' + a.id + '"><span class="badges">' + (a.retired ? '<span class="b">廃止</span>' : '') + (a.supplement ? '<span class="b">店舗補足：' + a.supplement.store + '</span>' : '') + '<span class="b">' + a.kind + '</span>' + (a.overdue ? '<span class="b b--warn">内容確認中</span>' : '') + '</span><span class="row__t">' + esc(a.title) + '</span><span class="row__m">' + a.updated + ' 更新</span></button></li>';
 	}
 	function rowNotice(n) {
 		var done = S.acked[S.role + n.id];
 		return '<li><button type="button" class="row" data-go="notice" data-id="' + n.id + '"><span class="badges">' + (n.important ? '<span class="b b--danger">重要</span>' : '') + (n.ack ? (done ? '<span class="b b--ok">確認済み</span>' : '<span class="b b--accent">要確認</span>') : '') + '</span><span class="row__t">' + esc(n.title) + '</span><span class="row__m">' + n.date + '　' + n.from + (n.ack && !done ? '　確認期限 ' + n.due : '') + '</span></button></li>';
 	}
+	function groups(list) {
+		var h = '';
+		KINDS.forEach(function (k) {
+			var g = list.filter(function (a) { return a.kind === k; });
+			if (g.length) h += '<p class="group__title">' + k + '<span>' + g.length + '件</span></p><ul class="list">' + g.map(rowArticle).join('') + '</ul>';
+		});
+		return h;
+	}
+	function chapterLabel(c) { return '第' + c.no + '章 ' + c.title; }
 
 	var V = {
 		home: function () {
@@ -350,97 +422,149 @@ svg.ic { width: 30px; height: 30px; fill: var(--accent-soft); stroke: currentCol
 			h += '<form class="search" data-form="search"><input id="q-home" type="search" placeholder="手順・薬剤名・キーワードで検索" aria-label="Wiki内を検索"><button class="btn" type="submit" style="width:auto">検索</button></form>';
 			if (u.length) h += '<button type="button" class="alert" data-go="notices"><b>未確認のお知らせが' + u.length + '件あります</b><span>' + esc(u[0].title) + (u.length > 1 ? ' ほか' : '') + '</span></button>';
 			if (S.role !== 'staff') {
-				h += '<p class="sec">' + (isHQ() ? '本部のメニュー' : '記事を書く人のメニュー') + '</p><ul class="grid">';
+				h += '<p class="sec">' + (isHQ() ? '本部のメニュー' : '文書を書く人のメニュー') + '</p><ul class="grid">';
 				if (isHQ()) h += tile('check', '承認待ち', 'data-go="approvals"', 'tile--staff', pendingCount()) + tile('chart', '既読状況', 'data-go="receipts"', 'tile--staff');
-				h += tile('pencil', '記事を書く', 'data-go="write"', 'tile--staff');
-				if (S.role === 'writer') h += tile('list', '自分の記事', 'data-go="mine"', 'tile--staff', S.mine.filter(function (m) { return m.status === 'returned'; }).length);
+				h += tile('pencil', '文書を書く', 'data-go="write"', 'tile--staff');
+				if (S.role === 'writer') h += tile('list', '自分の文書', 'data-go="mine"', 'tile--staff', S.mine.filter(function (m) { return m.status === 'returned'; }).length);
+				if (isHQ()) h += tile('book', '規程の管理', 'data-go="rules"', 'tile--staff', CHAPTERS.filter(function (c) { return c.status === 'template'; }).length) + tile('checklist', '必要文書の台帳', 'data-go="ledger"', 'tile--staff');
 				h += '</ul>';
 			}
-			h += '<p class="sec">メニュー</p><ul class="grid">';
-			h += tile('megaphone', 'お知らせ', 'data-go="notices"', '', u.length);
-			h += tile('alert', '緊急時', 'data-go="cat" data-id="emergency"', 'tile--danger');
-			['dispensing', 'insurance', 'homecare', 'storeops', 'training', 'forms', 'hr', 'compliance'].forEach(function (k) { h += tile(CATS[k].icon, CATS[k].name, 'data-go="cat" data-id="' + k + '"'); });
-			h += tile('question', 'よくある質問', 'data-go="faq"') + tile('card', 'マイページ', 'data-go="mypage"');
-			h += '</ul>';
+			h += '<p class="sec">メニュー</p><ul class="grid">' + tile('megaphone', 'お知らせ', 'data-go="notices"', '', u.length);
+			Object.keys(DOMAINS).forEach(function (k) { if (DOMAINS[k].home) h += tile(DOMAINS[k].icon, DOMAINS[k].short, 'data-go="cat" data-id="' + k + '"', k === 'emergency' ? 'tile--danger' : ''); });
+			h += tile('file', '様式・帳票', 'data-go="kind" data-id="様式・帳票"') + tile('book', '規程・文書一覧', 'data-go="docs"') + '</ul>';
 			return { title: '薬局Wiki', html: h };
 		},
 		cat: function (p) {
-			var list = visible(ARTICLES).filter(function (a) { return a.cat === p; });
-			var h = p === 'emergency' ? '<p class="info">落ち着いて、上から順に確認してください。迷ったら管理薬剤師かエリアマネージャーへ電話を。</p>' : '';
-			h += list.length ? '<ul class="list">' + list.map(rowArticle).join('') + '</ul>' : '<div class="empty">このカテゴリには、あなたの職種向けの記事がまだありません。検索もお試しください。</div>';
-			return { title: CATS[p].name, html: h };
+			var d = DOMAINS[p], list = live(ARTICLES).filter(function (a) { return a.cats.indexOf(p) > -1; });
+			var h = p === 'emergency' ? '<p class="info">落ち着いて、上から順に確認してください。迷ったら管理薬剤師かエリアの責任者へ電話を。この領域の手順は、印刷して店舗にも置いてあります。</p>' : '';
+			h += list.length ? groups(list) : '<div class="empty">この領域には、あなたが読める文書がまだありません。検索もお試しください。</div>';
+			var chs = CHAPTERS.filter(function (c) { return c.status === 'enacted' && d.ch.indexOf(c.no) > -1; });
+			if (chs.length) h += '<p class="group__title">この領域の規程</p><ul class="links">' + chs.map(function (c) { return '<li><button type="button" data-go="chapter" data-id="' + c.no + '">' + chapterLabel(c) + '</button></li>'; }).join('') + '</ul>';
+			return { title: d.name, html: h };
 		},
-		faq: function () {
-			return { title: 'よくある質問', html: '<ul class="list">' + visible(ARTICLES).filter(function (a) { return a.type === 'FAQ'; }).map(rowArticle).join('') + '</ul>' };
+		kind: function (p) {
+			var list = live(ARTICLES).filter(function (a) { return a.kind === p; });
+			return { title: p, html: list.length ? '<ul class="list">' + list.map(rowArticle).join('') + '</ul>' : '<div class="empty">この種類の文書はまだありません。</div>' };
+		},
+		docs: function () {
+			var h = '<p class="row__m">仕事のルールは、規程（何を守るか）、ガイドライン・手順書（どうやるか）、様式（記録を残す）でできています。</p>';
+			h += '<p class="group__title">文書の種類から探す</p><ul class="textgrid">' + KINDS.map(function (k) { return '<li><button type="button" data-go="kind" data-id="' + k + '">' + k + '<small>' + live(ARTICLES).filter(function (a) { return a.kind === k; }).length + '件</small></button></li>'; }).join('') + '</ul>';
+			h += '<p class="group__title">業務の領域から探す</p><ul class="textgrid">' + Object.keys(DOMAINS).map(function (k) { return '<li><button type="button" data-go="cat" data-id="' + k + '">' + DOMAINS[k].name + '<small>' + live(ARTICLES).filter(function (a) { return a.cats.indexOf(k) > -1; }).length + '件</small></button></li>'; }).join('') + '</ul>';
+			var chs = CHAPTERS.filter(function (c) { return c.status === 'enacted'; }).sort(function (a, b) { return a.no - b.no; });
+			h += '<p class="group__title">規程（Ver.1.1）</p><ul class="links">' + chs.map(function (c) { return '<li><button type="button" data-go="chapter" data-id="' + c.no + '">' + chapterLabel(c) + '<small>' + c.items.length + '項目</small></button></li>'; }).join('') + '</ul>';
+			h += '<button type="button" class="btn btn--sub" data-go="history">更新履歴を見る</button>';
+			return { title: '規程・文書一覧', html: h };
+		},
+		chapter: function (p) {
+			var c = CHAPTERS.filter(function (x) { return String(x.no) === String(p); })[0];
+			var h = '<p class="eyebrow">' + c.part + '　Ver.1.1　施行日 ' + c.date + '</p>';
+			h += '<div class="card"><ul class="links">' + c.items.map(function (i) { return '<li><button type="button" data-scroll="' + i.id + '"><span class="no">' + i.no + '</span>' + esc(i.title) + '</button></li>'; }).join('') + '</ul></div>';
+			c.items.forEach(function (i) {
+				var docs = docsForRule(i.id);
+				h += '<article class="card" id="' + i.id + '"><h3><span class="no">' + i.no + '</span>　' + esc(i.title) + '</h3><div class="body"><p>' + esc(i.body) + '</p></div>';
+				if (docs.length) h += '<p class="row__m">この項目に基づく文書</p><ul class="links">' + docs.map(function (a) { return '<li><button type="button" data-go="article" data-id="' + a.id + '">' + esc(a.title) + '<small>' + a.kind + '</small></button></li>'; }).join('') + '</ul>';
+				h += '</article>';
+			});
+			return { title: chapterLabel(c), html: h };
+		},
+		history: function () {
+			return { title: '更新履歴', html: '<ul class="list">' + S.history.map(function (r) { return '<li><div class="row"><span class="badges"><span class="b">' + r[1] + '</span></span><span class="row__t">' + esc(r[2]) + '</span>' + (r[3] ? '<span class="row__m">' + esc(r[3]) + '</span>' : '') + '<span class="row__m">2026年' + r[0] + '</span></div></li>'; }).join('') + '</ul>' };
 		},
 		article: function (p) {
-			var a = ARTICLES.filter(function (x) { return x.id === p; })[0];
-			var h = '<article class="card"><span class="badges"><span class="b">' + a.type + '</span><span class="b">' + CATS[a.cat].name + '</span></span><h3>' + esc(a.title) + '</h3>';
-			if (a.overdue) h += '<p class="warn">この記事は見直し期限を過ぎており、内容を確認中です。最新の取扱いは記事オーナーに確認してください。</p>';
-			h += '<dl class="meta"><div><dt>記事オーナー</dt><dd>' + a.owner + '</dd></div><div><dt>最終更新日</dt><dd>' + a.updated + '</dd></div><div><dt>次回見直し日</dt><dd>' + a.review + '</dd></div><div><dt>対象者</dt><dd>' + a.aud + '</dd></div>' + (a.source ? '<div><dt>根拠・出典</dt><dd>' + a.source + '</dd></div>' : '') + '</dl>';
-			h += '<div class="body">' + (a.body || '<p>モックアップでは、この記事の本文を省略しています。実際の画面では、目的・手順・注意点・関連記事の順に表示されます。</p>') + '</div></article>';
-			return { title: a.type, html: h };
+			var a = art(p), h = '<article class="card"><span class="badges">' + (a.supplement ? '<span class="b">店舗補足：' + a.supplement.store + '</span>' : '') + '<span class="b">' + a.kind + '</span>' + a.cats.map(function (c) { return '<span class="b">' + DOMAINS[c].short + '</span>'; }).join('') + '</span><h3>' + esc(a.title) + '</h3>';
+			if (a.retired) h += '<p class="warn">この文書は廃止されました。業務には使わないでください。理由：' + a.retired.reason + '</p><button type="button" class="btn btn--ghost" data-go="article" data-id="' + a.retired.next + '">後継の文書：' + esc(art(a.retired.next).title) + '</button>';
+			if (a.supplement) h += '<p class="info">この文書は店舗ごとの補足です。全社標準の「' + esc(art(a.supplement.base).title) + '」が優先します。</p>';
+			if (a.overdue && !a.retired) h += '<p class="warn">この文書は見直し期限を過ぎており、内容を確認中です。最新の取扱いは記事オーナーに確認してください。</p>';
+			h += '<dl class="meta"><div><dt>記事オーナー</dt><dd>' + a.owner + '</dd></div><div><dt>版・施行日</dt><dd>版 ' + a.ver + '　' + a.since + ' 施行</dd></div><div><dt>最終更新日</dt><dd>' + a.updated + '</dd></div>' + (a.review ? '<div><dt>次回見直し日</dt><dd>' + a.review + '</dd></div>' : '') + '<div><dt>対象者</dt><dd>' + (a.job || '全員') + '</dd></div></dl>';
+			h += '<div class="body">' + (a.body || NO_BODY) + '</div>';
+			if (a.forms.length) h += '<p class="group__title">使う様式</p><ul class="links">' + a.forms.map(function (f) { return '<li><button type="button" data-go="article" data-id="' + f + '">' + esc(art(f).title) + '</button></li>'; }).join('') + '</ul>';
+			if (a.rules.length) h += '<p class="group__title">根拠となる規程</p><ul class="links">' + a.rules.map(function (r) { var x = rule(r); return '<li><button type="button" data-go="chapter" data-id="' + x.ch.no + '"><span class="no">' + x.item.no + '</span>' + esc(x.item.title) + '</button></li>'; }).join('') + '</ul>';
+			h += '</article>';
+			var sib = live(ARTICLES).filter(function (b) { return b.id !== a.id && b.rules.some(function (r) { return a.rules.indexOf(r) > -1; }); });
+			if (sib.length) h += '<p class="sec">同じ規程に基づく文書</p><ul class="list">' + sib.map(rowArticle).join('') + '</ul>';
+			return { title: a.kind, html: h };
 		},
-		notices: function () {
-			return { title: 'お知らせ', html: '<ul class="list">' + visible(NOTICES).map(rowNotice).join('') + '</ul>' };
-		},
+		notices: function () { return { title: 'お知らせ', html: '<ul class="list">' + NOTICES.filter(canSee).map(rowNotice).join('') + '</ul>' }; },
 		notice: function (p) {
 			var n = NOTICES.filter(function (x) { return x.id === p; })[0], done = S.acked[S.role + n.id];
 			var h = '<article class="card"><span class="badges">' + (n.important ? '<span class="b b--danger">重要</span>' : '') + '<span class="b">お知らせ</span></span><h3>' + esc(n.title) + '</h3><dl class="meta"><div><dt>発信</dt><dd>' + n.from + '</dd></div><div><dt>公開日</dt><dd>2026年' + n.date + '</dd></div><div><dt>対象者</dt><dd>' + n.aud + '</dd></div></dl><div class="body">' + n.body + '</div>';
+			if (n.id === 'n1') h += '<button type="button" class="btn btn--sub" data-go="article" data-id="a4">正本の文書：疑義照会の手順</button>';
 			if (n.ack) h += done ? '<p class="done">確認済みです</p>' : '<p class="due">確認期限：' + n.due + '</p><button type="button" class="btn" data-act="ack" data-id="' + n.id + '">確認しました</button>';
 			return { title: 'お知らせ', html: h + '</article>' };
 		},
 		search: function (p) {
 			var q = (p || '').trim(), h = '<form class="search" data-form="search"><input id="q-search" type="search" value="' + esc(q) + '" placeholder="手順・薬剤名・キーワードで検索" aria-label="Wiki内を検索"><button class="btn" type="submit" style="width:auto">検索</button></form>';
 			if (!q) {
-				h += '<p class="sec">よく検索される言葉</p><div class="chips">' + ['一包化', '疑義照会', '返戻', '停電', '有給', '在宅'].map(function (w) { return '<button type="button" class="chip" data-go="search" data-id="' + w + '">' + w + '</button>'; }).join('') + '</div>';
+				h += '<p class="sec">よく検索される言葉</p><div class="chips">' + ['疑義照会', '返戻', '薬歴', '回収', '有給', '6-2'].map(function (w) { return '<button type="button" class="chip" data-go="search" data-id="' + w + '">' + w + '</button>'; }).join('') + '</div><p class="row__m">規程の項目番号（例：6-2）で検索すると、その項目が開きます。</p>';
 			} else {
-				var hit = visible(ARTICLES).filter(function (a) { return (a.title + CATS[a.cat].name + a.type + (a.body || '')).indexOf(q) > -1; });
-				var hn = visible(NOTICES).filter(function (n) { return (n.title + n.body).indexOf(q) > -1; });
-				h += '<p class="sec">「' + esc(q) + '」の検索結果（' + (hit.length + hn.length) + '件）</p>';
-				h += hit.length + hn.length ? '<ul class="list">' + hn.map(rowNotice).join('') + hit.map(rowArticle).join('') + '</ul>' : '<div class="empty">該当する記事が見つかりませんでした。言葉を変えるか、一般名・商品名の別の表記でお試しください。検索された言葉は、本部が記事を追加する際の参考にします。</div>';
+				var hit = live(ARTICLES).filter(function (a) { return (a.title + a.kind + (a.body || '') + a.cats.map(function (c) { return DOMAINS[c].name; }).join('')).indexOf(q) > -1; });
+				var hn = NOTICES.filter(canSee).filter(function (n) { return (n.title + n.body).indexOf(q) > -1; });
+				var hr = []; CHAPTERS.forEach(function (c) { if (c.status === 'enacted') c.items.forEach(function (i) { if ((i.no + i.title + i.body).indexOf(q) > -1) hr.push({ i: i, c: c }); }); });
+				h += '<p class="sec">「' + esc(q) + '」の検索結果（' + (hit.length + hn.length + hr.length) + '件）</p>';
+				if (hit.length + hn.length + hr.length) {
+					h += '<ul class="list">' + hn.map(rowNotice).join('') + hit.map(rowArticle).join('') + hr.map(function (x) { return '<li><button type="button" class="row" data-go="chapter" data-id="' + x.c.no + '"><span class="badges"><span class="b">規程 ' + x.i.no + '</span></span><span class="row__t">' + esc(x.i.title) + '</span><span class="row__m">' + chapterLabel(x.c) + '</span></button></li>'; }).join('') + '</ul>';
+				} else {
+					h += '<div class="empty">該当する文書が見つかりませんでした。言葉を変えるか、一般名・商品名の別の表記でお試しください。検索された言葉は、本部が文書を追加する際の参考にします。</div>';
+				}
 			}
 			return { title: '検索', html: h };
 		},
 		mypage: function () {
-			var u = unread(), r = ROLES[S.role];
-			var h = '<div class="card"><h3>' + r.who.replace('<br>', '　') + '</h3><p class="row__m">' + r.name + '</p></div><p class="sec">未確認のお知らせ（' + u.length + '件）</p>';
+			var u = unread(), h = '<p class="sec">未確認のお知らせ（' + u.length + '件）</p>';
 			h += u.length ? '<ul class="list">' + u.map(rowNotice).join('') + '</ul>' : '<div class="empty">未確認のお知らせはありません。</div>';
-			h += '<p class="sec">最近見た記事</p><ul class="list">' + visible(ARTICLES).slice(0, 3).map(rowArticle).join('') + '</ul>';
+			h += '<p class="sec">最近見た文書</p><ul class="list">' + live(ARTICLES).slice(0, 3).map(rowArticle).join('') + '</ul>';
 			return { title: 'マイページ', html: h };
+		},
+		account: function () {
+			var r = ROLES[S.role], n = r.who.split('　')[1].replace(' さん', '');
+			var h = '<div class="card"><h3>登録内容</h3><dl class="meta"><div><dt>氏名</dt><dd>' + n + '</dd></div><div><dt>所属店舗</dt><dd>' + r.store + '</dd></div><div><dt>職種</dt><dd>' + r.job + '</dd></div><div><dt>できること</dt><dd>' + r.can + '</dd></div></dl><p class="row__m">所属店舗や職種が違っている場合は、Wikiの管理者に連絡してください。見られる文書は、所属と職種で決まります。</p>';
+			h += '<ul class="links"><li><button type="button" data-tab="mypage">マイページ（未確認のお知らせ）</button></li><li><button type="button" data-act="noop" data-msg="パスワードの変更画面に進みます（モックアップでは省略）">パスワードを変更する</button></li><li><button type="button" data-go="settings">文字の大きさを変える</button></li><li><button type="button" data-act="noop" data-msg="ログアウトします（モックアップでは省略）">ログアウト</button></li></ul></div>';
+			return { title: 'アカウント', html: h };
+		},
+		settings: function () {
+			var opts = [['', '標準', ''], ['lg', '大きめ', 'choice--lg'], ['xl', 'とても大きい', 'choice--xl']];
+			var h = '<form class="card" data-form="settings"><p class="group__title">文字の大きさ</p>' + opts.map(function (o) { return '<label class="choice ' + o[2] + '"><input type="radio" name="font" value="' + o[0] + '"' + (S.font === o[0] ? ' checked' : '') + '><span>' + o[1] + '　一包化の手順</span></label>'; }).join('') + '<p class="row__m">選んだ大きさは、あなたがログインしているときだけ使われます。共用のパソコンでも、ほかの人の表示は変わりません。</p><button class="btn" type="submit">この設定を保存する</button></form>';
+			return { title: '設定', html: h };
+		},
+		help: function () {
+			var faq = live(ARTICLES).filter(function (a) { return a.kind === 'FAQ'; });
+			var h = '<div class="card"><h3>このWikiの使い方</h3><div class="body"><h4>文書を探す</h4><p>手順の名前、薬剤名、様式の名前で検索できます。ホームのメニューから、仕事の内容ごとに探すこともできます。</p><h4>お知らせを確認する</h4><p>内容を読み、「確認しました」を押すと、赤い数字が減ります。</p><h4>文字を大きくする</h4><p>右上の「メニュー」→「設定」で、3段階から選べます。</p><h4>見つからない・内容が古いと感じたら</h4><p>文書の「記事オーナー」に確認してください。分からないときは、本部のWiki担当者へ。</p></div></div>';
+			h += '<p class="sec">業務のよくある質問</p>' + (faq.length ? '<ul class="list">' + faq.map(rowArticle).join('') + '</ul>' : '<div class="empty">あなたが読めるよくある質問は、まだ登録されていません。</div>');
+			return { title: 'ヘルプ・よくある質問', html: h };
 		},
 		write: function () {
 			var h = '<form class="card" data-form="write" novalidate><div class="field"><label for="w-title">タイトル</label><input id="w-title" type="text" value="お薬手帳アプリの連携手順"></div>';
-			h += '<div class="field"><label for="w-cat">カテゴリ</label><select id="w-cat">' + Object.keys(CATS).map(function (k) { return '<option' + (k === 'storeops' ? ' selected' : '') + '>' + CATS[k].name + '</option>'; }).join('') + '</select></div>';
+			h += '<div class="field"><label for="w-kind">文書の種類</label><select id="w-kind">' + KINDS.map(function (k) { return '<option' + (k === '手順書・マニュアル' ? ' selected' : '') + '>' + k + '</option>'; }).join('') + '</select></div>';
+			h += '<div class="field"><label for="w-cat">業務の領域</label><select id="w-cat">' + Object.keys(DOMAINS).map(function (k) { return '<option' + (k === 'storeops' ? ' selected' : '') + '>' + DOMAINS[k].name + '</option>'; }).join('') + '</select></div>';
 			h += '<div class="field"><label for="w-body">本文</label><textarea id="w-body">1. 患者さんにアプリの画面でQRコードを表示してもらう。\n2. レセコンの「手帳連携」から読み取る。\n3. 連携できたことを患者さんの画面で一緒に確認する。</textarea></div>';
-			h += '<div class="field"><label for="w-file">写真・PDFの添付</label><input id="w-file" type="file" accept="image/*,application/pdf" multiple><span class="row__m">自分がアップロードしたファイルだけが一覧に出ます。患者さんの氏名が写り込んでいないか確認してください。</span></div>';
+			h += '<div class="field"><label for="w-rule">根拠となる規程（項目番号）</label><input id="w-rule" type="text" placeholder="6-2, 6-3"></div>';
+			h += '<div class="field"><label for="w-file">写真・PDFの添付</label><input id="w-file" type="file" accept="image/*,application/pdf" multiple><span class="row__m">患者さんの氏名が写り込んでいないか確認してください。</span></div>';
 			h += '<label class="check" for="w-pharm"><input id="w-pharm" type="checkbox"><span>医薬品・算定に関わる内容である<br><span class="row__m">チェックすると、薬剤部の承認者だけが公開・改訂できます。</span></span></label>';
 			h += '<p class="err" id="w-err" hidden>タイトルと本文を入力してください。</p><button class="btn" type="submit">' + (isHQ() ? '公開する' : '承認を依頼する') + '</button><button class="btn btn--sub" type="button" data-act="draft">下書きとして保存</button></form>';
-			return { title: '記事を書く', html: h };
+			return { title: '文書を書く', html: h };
 		},
 		mine: function () {
 			var label = { returned: ['差し戻し', 'b--danger'], draft: ['下書き', ''], pending: ['承認待ち', 'b--accent'], published: ['公開済み', 'b--ok'] };
 			var items = S.pending.filter(function (p) { return p.mine; }).map(function (p) { return { id: p.id, title: p.title, status: p.status, at: p.at, comment: p.comment, by: p.by }; }).concat(S.mine);
-			var h = '<ul class="list">' + items.map(function (m) {
+			return { title: '自分の文書', html: '<ul class="list">' + items.map(function (m) {
 				return '<li><div class="row"><span class="badges"><span class="b ' + label[m.status][1] + '">' + label[m.status][0] + '</span></span><span class="row__t">' + esc(m.title) + '</span><span class="row__m">' + m.at + '</span>' + (m.comment ? '<div class="quote"><b>差し戻しの理由（' + m.by + '）</b>' + esc(m.comment) + '</div>' : '') + (m.status === 'returned' ? '<button type="button" class="btn btn--ghost" data-act="resubmit" data-id="' + m.id + '">直して、もう一度依頼する</button>' : '') + '</div></li>';
-			}).join('') + '</ul>';
-			return { title: '自分の記事', html: h };
+			}).join('') + '</ul>' };
 		},
 		approvals: function () {
 			var list = S.pending.filter(function (p) { return p.status === 'pending'; });
 			var h = list.length ? '<ul class="list">' + list.map(function (p) {
 				return '<li><button type="button" class="row" data-go="approve" data-id="' + p.id + '"><span class="badges"><span class="b">' + p.kind + '</span>' + (p.pharm ? '<span class="b b--accent">薬剤部の承認が必要</span>' : '') + '</span><span class="row__t">' + esc(p.title) + '</span><span class="row__m">' + p.at + ' 依頼　' + esc(p.author) + '</span></button></li>';
-			}).join('') + '</ul>' : '<div class="empty">承認待ちの記事はありません。</div>';
+			}).join('') + '</ul>' : '<div class="empty">承認待ちの文書はありません。</div>';
 			var done = S.pending.filter(function (p) { return p.status !== 'pending'; });
 			if (done.length) h += '<p class="sec">対応済み</p><ul class="list">' + done.map(function (p) { return '<li><div class="row"><span class="badges"><span class="b ' + (p.status === 'published' ? 'b--ok">公開済み' : 'b--danger">差し戻し') + '</span></span><span class="row__t">' + esc(p.title) + '</span></div></li>'; }).join('') + '</ul>';
 			return { title: '承認待ち', html: h };
 		},
 		approve: function (p) {
 			var x = S.pending.filter(function (y) { return y.id === p; })[0];
-			var h = '<article class="card"><span class="badges"><span class="b">' + x.kind + '</span><span class="b">' + x.cat + '</span>' + (x.pharm ? '<span class="b b--accent">薬剤部の承認が必要</span>' : '') + '</span><h3>' + esc(x.title) + '</h3><dl class="meta"><div><dt>書いた人</dt><dd>' + esc(x.author) + '</dd></div><div><dt>依頼日</dt><dd>2026年' + x.at + '</dd></div>' + (x.reason ? '<div><dt>改訂理由</dt><dd>' + x.reason + '</dd></div>' : '') + '</dl><div class="body">' + x.body + '</div></article>';
+			var h = '<article class="card"><span class="badges"><span class="b">' + x.kind + '</span><span class="b">' + x.docKind + '</span><span class="b">' + DOMAINS[x.cat].short + '</span>' + (x.pharm ? '<span class="b b--accent">薬剤部の承認が必要</span>' : '') + '</span><h3>' + esc(x.title) + '</h3><dl class="meta"><div><dt>書いた人</dt><dd>' + esc(x.author) + '</dd></div><div><dt>依頼日</dt><dd>2026年' + x.at + '</dd></div>' + (x.reason ? '<div><dt>改訂理由</dt><dd>' + x.reason + '</dd></div>' : '') + '</dl><div class="body">' + x.body + '</div></article>';
 			if (x.status === 'pending') {
 				var can = !x.pharm || S.role === 'approver';
-				h += '<div class="card">' + (x.pharm ? '<p class="info">医薬品・算定に関わる記事です。' + (can ? '薬剤部の承認者だけが公開できます。' : '公開できるのは薬剤部の承認者だけです。差し戻しはできます。') + '</p>' : '') + (can ? '<button type="button" class="btn" data-act="publish" data-id="' + x.id + '">承認して公開する</button>' : '') + '<div class="field"><label for="r-comment">差し戻す場合の理由</label><textarea id="r-comment" placeholder="直してほしい点を書いてください。書いた人にメールで届きます。"></textarea></div><p class="err" id="r-err" hidden>差し戻しには理由の入力が必要です。</p><button type="button" class="btn btn--ghost" data-act="return" data-id="' + x.id + '">差し戻す</button></div>';
+				h += '<div class="card">' + (x.pharm ? '<p class="info">医薬品・算定に関わる文書です。' + (can ? '薬剤部の承認者だけが公開できます。' : '公開できるのは薬剤部の承認者だけです。差し戻しはできます。') + '</p>' : '') + (can ? '<button type="button" class="btn" data-act="publish" data-id="' + x.id + '">承認して公開する</button>' : '') + '<div class="field"><label for="r-comment">差し戻す場合の理由</label><textarea id="r-comment" placeholder="直してほしい点を書いてください。書いた人にメールで届きます。"></textarea></div><p class="err" id="r-err" hidden>差し戻しには理由の入力が必要です。</p><button type="button" class="btn btn--ghost" data-act="return" data-id="' + x.id + '">差し戻す</button></div>';
 			} else {
 				h += '<p class="done">' + (x.status === 'published' ? '公開しました' : '差し戻しました') + '</p>';
 			}
@@ -451,22 +575,52 @@ svg.ic { width: 30px; height: 30px; fill: var(--accent-soft); stroke: currentCol
 			var h = '<div class="card"><span class="badges"><span class="b b--danger">重要</span></span><h3>年末年始の営業時間と当番体制</h3><p class="row__m">確認期限 10月31日　対象：全員</p><p><span class="big">' + Math.round(done / all * 100) + '%</span>　' + done + ' / ' + all + ' 名が確認済み</p><div class="meter">' + STORES.map(function (s) {
 				return '<div class="meter__row"><span>' + s[0] + '</span><div class="meter__track"><div class="meter__fill" style="width:' + Math.round(s[1] / s[2] * 100) + '%"></div></div><span>' + s[1] + ' / ' + s[2] + ' 名</span></div>';
 			}).join('') + '</div></div>';
-			h += '<p class="sec">未確認の人（西町店）</p><ul class="list">' + ['高橋（医療事務）', '渡辺（薬剤師）', '松本（医療事務）', '井上（登録販売者）', '木村（薬剤師）', '林（医療事務）'].map(function (n) { return '<li><div class="row"><span class="row__t" style="font-weight:500">' + n + '</span></div></li>'; }).join('') + '</ul><p class="row__m">一覧はCSVで出力でき、エリアマネージャーへの連絡に使えます。</p>';
+			h += '<p class="sec">未確認の人（西町店）</p><ul class="list">' + ['高橋（医療事務）', '渡辺（薬剤師）', '松本（医療事務）', '井上（登録販売者）', '木村（薬剤師）', '林（医療事務）'].map(function (n) { return '<li><div class="row"><span class="row__t" style="font-weight:400">' + n + '</span></div></li>'; }).join('') + '</ul><p class="row__m">一覧はCSVで出力でき、エリアの責任者への連絡に使えます。</p>';
 			return { title: '既読状況', html: h };
+		},
+		rules: function () {
+			var h = '<p class="row__m">規程は雛形として取り込まれます。項目ごとに自社の実態に合うか確認し、採否を決めてから、章単位で施行します。</p><ul class="list">' + CHAPTERS.slice().sort(function (a, b) { return a.no - b.no; }).map(function (c) {
+				return '<li><button type="button" class="row" data-go="' + (c.status === 'template' ? 'ruleedit' : 'chapter') + '" data-id="' + c.no + '"><span class="badges"><span class="b ' + (c.status === 'template' ? 'b--warn">確認前の雛形' : 'b--ok">施行中') + '</span></span><span class="row__t">' + chapterLabel(c) + '</span><span class="row__m">' + c.items.length + '項目' + (c.date ? '　' + c.date + ' 施行' : '') + '</span></button></li>';
+			}).join('') + '</ul>';
+			return { title: '規程の管理', html: h };
+		},
+		ruleedit: function (p) {
+			var c = CHAPTERS.filter(function (x) { return String(x.no) === String(p); })[0];
+			var left = c.items.filter(function (i) { return !i.decision || (i.decision === 'rejected' && !i.reason.trim()); });
+			var h = '<p class="warn">雛形です。施行するまで業務には使えません。項目ごとに本文を読み、責任者・連絡先・実際の運用に合っているかを確かめてください。</p>';
+			c.items.forEach(function (i) {
+				h += '<div class="card"><h3><span class="no">' + i.no + '</span>　' + esc(i.title) + '</h3><div class="body"><p>' + esc(i.body) + '</p></div><div class="decide"><label class="row__m" for="d-' + i.id + '">確認結果</label><select id="d-' + i.id + '" data-decide="' + i.id + '">' + [['', '確認中'], ['adopt', '雛形のまま採用'], ['modified', '修正して採用'], ['rejected', '不採用']].map(function (o) { return '<option value="' + o[0] + '"' + (i.decision === o[0] ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') + '</select>' + (i.decision === 'rejected' ? '<input type="text" data-reason="' + i.id + '" value="' + esc(i.reason) + '" placeholder="不採用の理由（必須）" aria-label="不採用の理由">' : '') + (i.decision ? '<span class="row__m">' + me() + '　10月12日</span>' : '') + '</div></div>';
+			});
+			h += '<div class="card"><h3>この章を承認し、指定日に施行する</h3>' + (left.length ? '<p class="row__m">次の項目が残っているため、まだ施行できません。</p><ul class="body">' + left.map(function (i) { return '<li>' + i.no + '：' + (i.decision === 'rejected' ? '不採用の理由が書かれていません' : '採否が決まっていません') + '</li>'; }).join('') + '</ul>' : '<p class="row__m">全項目の確認が済みました。不採用の項目は施行されません。</p>') + '<button type="button" class="btn" data-act="enact" data-id="' + c.no + '"' + (left.length ? ' disabled' : '') + '>この章を承認し、今日から施行する</button></div>';
+			return { title: chapterLabel(c), html: h };
+		},
+		ledger: function () {
+			var yes = LEDGER.filter(function (r) { return r.applies === 'yes'; });
+			var h = '<p class="info">整備が求められる・実務上必要な文書の一覧です（同梱は113件。ここでは「調剤・医療安全」の一部）。一覧はたたき台で、根拠は各社が最新の法令・通知で確認します。</p>';
+			h += '<p class="row__m">該当する ' + yes.length + ' 件のうち、充足を確認 ' + yes.filter(function (r) { return r.done; }).length + ' 件／未判断 ' + LEDGER.filter(function (r) { return !r.applies; }).length + ' 件／法令に根拠があり未充足 ' + yes.filter(function (r) { return !r.done && r.basis === '法令'; }).length + ' 件</p>';
+			LEDGER.forEach(function (r, i) {
+				h += '<div class="card"><span class="badges"><span class="b">' + r.kind + '</span><span class="b ' + (r.basis === '法令' ? 'b--accent' : '') + '">根拠：' + r.basis + '</span></span><h3>' + r.name + '</h3><p class="row__m">求められること：' + r.need + '</p><div class="decide"><select data-ledger="' + i + '" aria-label="該当するか">' + [['', '未判断'], ['yes', '該当する'], ['no', '該当しない'], ['unknown', '確認中']].map(function (o) { return '<option value="' + o[0] + '"' + (r.applies === o[0] ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') + '</select>' + (r.owner ? '<span class="row__m">担当：' + r.owner + '</span>' : '') + (r.doc ? '<span class="row__m">対応する文書：' + esc(art(r.doc).title) + '（公開）</span>' : '<span class="row__m">対応する文書：未登録</span>') + (r.applies === 'yes' ? '<label class="check"><input type="checkbox" data-ledger-done="' + i + '"' + (r.done ? ' checked' : '') + '><span>要求を満たしたことを確認した<br><span class="row__m">文書を公開しただけでは、研修や記録の要求は満たせません。</span></span></label>' : '') + '</div></div>';
+			});
+			return { title: '必要文書の台帳', html: h };
 		}
 	};
 
 	function mailHtml() {
 		var m = S.mail;
-		if (!m) return '<div class="mail mail--empty"><span class="mail__label">まだ通知はありません</span><span>「管理薬剤師・店長」で記事の承認を依頼するか、本部の立場で承認・差し戻しをしてみてください。</span></div>';
-		return '<div class="mail"><span class="mail__label">届くメール（案）</span><div class="mail__head"><span>宛先：<b>' + esc(m.to) + '</b></span><span>件名：<b>' + esc(m.subject) + '</b></span></div><div class="mail__body">' + esc(m.body) + '</div></div>';
+		if (!m) return '<div class="mail mail--empty"><span class="mail__label">まだ通知はありません</span><span>「管理薬剤師・店長」で文書の承認を依頼するか、本部の立場で承認・差し戻しをしてみてください。</span></div>';
+		return '<div class="mail"><span class="mail__label">届くメール</span><div class="mail__head"><span>宛先：<b>' + esc(m.to) + '</b></span><span>件名：<b>' + esc(m.subject) + '</b></span></div><div class="mail__body">' + esc(m.body) + '</div></div>';
 	}
+	function approversFor(pharm) { return pharm ? '薬剤部の承認者（山田）' : '本部の承認者（業務部 小林・薬剤部 山田）'; }
+	function requestMail(x) { return { to: approversFor(x.pharm), subject: '[薬局Wiki] 承認の依頼があります：' + x.title, body: '承認者 各位\n\n次の文書について、承認の依頼がありました。内容を確認し、公開または差し戻しをしてください。\n\n文書：' + x.title + '\n書いた人：' + x.author + (x.pharm ? '\n\nこの文書は医薬品・算定に関わる内容です。薬剤部の承認者だけが公開できます。' : '') }; }
 
 	function render(focus) {
 		var c = cur(), v = V[c.n](c.p), r = ROLES[S.role];
 		$('roles').innerHTML = Object.keys(ROLES).map(function (k) { return '<button type="button" class="role" data-role="' + k + '" aria-pressed="' + (k === S.role) + '"><strong>' + ROLES[k].name + '</strong><span>' + ROLES[k].desc + '</span></button>'; }).join('');
 		$('notes').innerHTML = r.notes.map(function (n) { return '<li>' + n + '</li>'; }).join('');
-		$('bar').innerHTML = (S.stack.length > 1 ? '<button type="button" class="iconbtn" data-act="back" aria-label="前の画面に戻る">' + ic('back') + '</button>' : '') + '<span class="bar__title">' + v.title + '</span><span class="bar__who">' + r.who + '</span>';
+		$('bar').innerHTML = (S.stack.length > 1 ? '<button type="button" class="iconbtn" data-act="back" aria-label="前の画面に戻る">' + ic('back') + '</button>' : '') + '<span class="bar__title">' + v.title + '</span><button type="button" class="menubtn" data-act="menu" aria-expanded="' + S.menu + '">メニュー</button>';
+		$('dropdown').hidden = !S.menu;
+		$('dropdown').innerHTML = '<button type="button" data-tab="account">アカウント</button><button type="button" data-tab="settings">設定</button><button type="button" data-tab="help">ヘルプ・よくある質問</button><button type="button" data-act="noop" data-msg="ログアウトします（モックアップでは省略）">ログアウト</button>';
+		$('view').className = 'view' + (S.font ? ' fs-' + S.font : '');
 		$('view').innerHTML = v.html;
 		var u = unread().length, root = S.stack[0].n;
 		$('tabs').innerHTML = [['home', 'home', 'ホーム'], ['search', 'search', '検索'], ['notices', 'megaphone', 'お知らせ'], ['mypage', 'card', 'マイページ']].map(function (t) {
@@ -478,52 +632,77 @@ svg.ic { width: 30px; height: 30px; fill: var(--accent-soft); stroke: currentCol
 	}
 
 	document.addEventListener('click', function (e) {
-		var t = e.target.closest('[data-role],[data-go],[data-tab],[data-act]');
+		var t = e.target.closest('[data-role],[data-go],[data-tab],[data-act],[data-scroll]');
 		if (!t) return;
-		if (t.dataset.role) { S.role = t.dataset.role; S.stack = [{ n: 'home' }]; return render(true); }
-		if (t.dataset.tab) { S.stack = [{ n: t.dataset.tab }]; return render(true); }
+		if (t.dataset.scroll) { var el = document.getElementById(t.dataset.scroll); if (el) $('view').scrollTop = el.offsetTop - 8; return; }
+		if (t.dataset.role) { S.role = t.dataset.role; S.stack = [{ n: 'home' }]; S.menu = false; return render(true); }
+		if (t.dataset.tab) { S.stack = [{ n: t.dataset.tab }]; S.menu = false; return render(true); }
 		if (t.dataset.go) return go(t.dataset.go, t.dataset.id);
 		var act = t.dataset.act, id = t.dataset.id;
-		if (act === 'back') { S.stack.pop(); return render(true); }
+		if (act === 'menu') { S.menu = !S.menu; return render(); }
+		if (act === 'noop') { S.menu = false; return toast(t.dataset.msg); }
+		if (act === 'back') { S.stack.pop(); S.menu = false; return render(true); }
 		if (act === 'ack') { S.acked[S.role + id] = true; return toast('確認を記録しました'); }
 		if (act === 'draft') { S.mine.unshift({ id: 'd' + Date.now(), title: $('w-title').value.trim() || '（無題）', status: 'draft', at: '10月12日' }); S.stack = [{ n: 'home' }, { n: 'mine' }]; return toast('下書きを保存しました'); }
+		if (act === 'enact') {
+			var c = CHAPTERS.filter(function (x) { return String(x.no) === String(id); })[0];
+			c.items = c.items.filter(function (i) { return i.decision !== 'rejected'; });
+			c.status = 'enacted'; c.date = '2026年10月12日';
+			log('施行', chapterLabel(c) + '（' + c.items.length + '項目）', '承認：' + me());
+			S.stack = [{ n: 'home' }, { n: 'rules' }];
+			return toast('施行しました。店舗スタッフに表示されます');
+		}
 		var x = S.pending.filter(function (p) { return p.id === id; })[0];
 		if (act === 'resubmit') {
 			var mi = S.mine.filter(function (m) { return m.id === id; })[0];
-			if (mi) { S.mine = S.mine.filter(function (m) { return m.id !== id; }); x = { id: 'p' + Date.now(), title: mi.title, author: me(), mine: true, kind: '新規', pharm: true, cat: '調剤・服薬指導', body: '<p>写真を差し替えた版です。モックアップでは本文を省略しています。</p>' }; S.pending.unshift(x); }
+			if (mi) { S.mine = S.mine.filter(function (m) { return m.id !== id; }); x = { id: 'p' + Date.now(), title: mi.title, author: me(), mine: true, kind: '新規', pharm: true, cat: 'inventory', docKind: '手順書・マニュアル', body: '<p>写真を差し替えた版です。モックアップでは本文を省略しています。</p>' }; S.pending.unshift(x); }
 			x.status = 'pending'; x.comment = ''; x.at = '10月12日';
-			S.mail = { to: x.pharm ? '薬剤部の承認者（山田）' : '本部の承認者（業務部 小林・薬剤部 山田）', subject: '[薬局Wiki] 承認の依頼があります：' + x.title, body: '承認者 各位\n\n次の記事について、承認の依頼がありました。内容を確認し、公開または差し戻しをしてください。\n\n記事：' + x.title + '\n書いた人：' + x.author + (x.pharm ? '\n\nこの記事は医薬品・算定に関わる内容です。薬剤部の承認者だけが公開できます。' : '') };
+			S.mail = requestMail(x);
 			return toast('もう一度、承認を依頼しました');
 		}
 		if (act === 'publish') {
 			x.status = 'published';
-			addArticle(x.title, x.cat, x.body, me(), x.pharm);
-			S.mail = { to: x.author, subject: '[薬局Wiki] 記事が公開されました：' + x.title, body: x.author.split(' ').pop() + ' 様\n\n依頼された記事を承認し、公開しました。\n\n記事：' + x.title + '\n承認者：' + me() + '\n\n対象のスタッフがアプリで読めるようになっています。' };
+			addArticle(x.title, x.cat, x.docKind, x.body, me(), x.pharm);
+			S.mail = { to: x.author, subject: '[薬局Wiki] 文書が公開されました：' + x.title, body: x.author.split(' ').pop() + ' 様\n\n依頼された文書を承認し、公開しました。\n\n文書：' + x.title + '\n承認者：' + me() + '\n\n対象のスタッフがアプリで読めるようになっています。' };
 			return toast('公開しました。書いた人に通知しました');
 		}
 		if (act === 'return') {
-			var c = $('r-comment').value.trim();
-			if (!c) { $('r-err').hidden = false; return $('r-comment').focus(); }
-			x.status = 'returned'; x.comment = c; x.by = me();
-			S.mail = { to: x.author, subject: '[薬局Wiki] 記事が差し戻されました：' + x.title, body: x.author.split(' ').pop() + ' 様\n\n依頼された記事を確認し、差し戻しました。次の点を直してから、もう一度承認を依頼してください。\n\n記事：' + x.title + '\n差し戻しの理由：\n' + c + '\n\n確認者：' + me() };
+			var cm = $('r-comment').value.trim();
+			if (!cm) { $('r-err').hidden = false; return $('r-comment').focus(); }
+			x.status = 'returned'; x.comment = cm; x.by = me();
+			S.mail = { to: x.author, subject: '[薬局Wiki] 文書が差し戻されました：' + x.title, body: x.author.split(' ').pop() + ' 様\n\n依頼された文書を確認し、差し戻しました。次の点を直してから、もう一度承認を依頼してください。\n\n文書：' + x.title + '\n差し戻しの理由：\n' + cm + '\n\n確認者：' + me() };
 			return toast('差し戻しました。理由を通知しました');
 		}
+	});
+	document.addEventListener('change', function (e) {
+		var t = e.target;
+		if (t.dataset.decide) { var r = rule(t.dataset.decide).item; r.decision = t.value; if (t.value !== 'rejected') r.reason = ''; return render(); }
+		if (t.dataset.reason) { rule(t.dataset.reason).item.reason = t.value; return render(); }
+		if (t.dataset.ledger) { var row = LEDGER[+t.dataset.ledger]; row.applies = t.value; if (t.value !== 'yes') row.done = false; return render(); }
+		if (t.dataset.ledgerDone) { LEDGER[+t.dataset.ledgerDone].done = t.checked; return render(); }
 	});
 	document.addEventListener('submit', function (e) {
 		e.preventDefault();
 		var f = e.target.dataset.form;
-		if (f === 'search') { S.stack = [{ n: 'search', p: e.target.querySelector('input').value }]; return render(true); }
+		if (f === 'search') {
+			var q = e.target.querySelector('input').value.trim(), hit = null;
+			if (/^\d+-\d+$/.test(q)) CHAPTERS.forEach(function (c) { if (c.status === 'enacted') c.items.forEach(function (i) { if (i.no === q) hit = c; }); });
+			S.stack = hit ? [{ n: 'search', p: '' }, { n: 'chapter', p: hit.no }] : [{ n: 'search', p: q }];
+			return render(true);
+		}
+		if (f === 'settings') { S.font = (e.target.querySelector('input[name=font]:checked') || { value: '' }).value; return toast('設定を保存しました'); }
 		if (f === 'write') {
-			var title = $('w-title').value.trim(), body = $('w-body').value.trim(), pharm = $('w-pharm').checked;
+			var title = $('w-title').value.trim(), body = $('w-body').value.trim(), pharm = $('w-pharm').checked, cat = domainKey($('w-cat').value), kind = $('w-kind').value;
 			if (!title || !body) { $('w-err').hidden = false; return; }
-			var who = me(), html = '<p>' + esc(body).replace(/\n/g, '<br>') + '</p>';
+			var html = '<p>' + esc(body).replace(/\n/g, '<br>') + '</p>';
 			if (isHQ() && (!pharm || S.role === 'approver')) {
-				addArticle(title, $('w-cat').value, html, who, pharm);
-				S.stack = [{ n: 'home' }, { n: 'cat', p: catKey($('w-cat').value) }];
+				addArticle(title, cat, kind, html, me(), pharm);
+				S.stack = [{ n: 'home' }, { n: 'cat', p: cat }];
 				return toast('公開しました');
 			}
-			S.pending.unshift({ id: 'p' + Date.now(), title: title, author: who, mine: S.role === 'writer', kind: '新規', pharm: pharm, at: '10月12日', cat: $('w-cat').value, status: 'pending', body: html });
-			S.mail = { to: pharm ? '薬剤部の承認者（山田）' : '本部の承認者（業務部 小林・薬剤部 山田）', subject: '[薬局Wiki] 承認の依頼があります：' + title, body: '承認者 各位\n\n次の記事について、承認の依頼がありました。内容を確認し、公開または差し戻しをしてください。\n\n記事：' + title + '\n書いた人：' + who + '\nカテゴリ：' + $('w-cat').value + (pharm ? '\n\nこの記事は医薬品・算定に関わる内容です。薬剤部の承認者だけが公開できます。' : '') };
+			var x = { id: 'p' + Date.now(), title: title, author: me(), mine: S.role === 'writer', kind: '新規', pharm: pharm, at: '10月12日', cat: cat, docKind: kind, status: 'pending', body: html };
+			S.pending.unshift(x);
+			S.mail = requestMail(x);
 			S.stack = S.role === 'writer' ? [{ n: 'home' }, { n: 'mine' }] : [{ n: 'home' }, { n: 'approvals' }];
 			toast(isHQ() ? '薬剤部の承認が必要なため、承認待ちになりました' : '承認を依頼しました');
 		}
